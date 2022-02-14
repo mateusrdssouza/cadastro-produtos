@@ -30,5 +30,4 @@ Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name(
 /**
  * Product routes
  */
-Route::resource('product', App\Http\Controllers\ProductController::class)
-	->middleware('auth');
+Route::resource('product', App\Http\Controllers\ProductController::class);
