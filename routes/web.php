@@ -14,9 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	return redirect()->route('home');
 });
 
+/**
+ * Authentication routes
+ */
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/**
+ * Home routes
+ */
+Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/**
+ * Product routes
+ */
+Route::resource('product', App\Http\Controllers\ProductController::class)
+	->middleware('auth');
