@@ -25,7 +25,8 @@ class TagController extends Controller
 	 */
 	public function index()
 	{
-		return view('tag.index');
+		$tags = Tag::orderBy('id', 'asc')->paginate(5);
+		return view('tag.index', ['tags' => $tags]);
 	}
 
 	/**
@@ -35,7 +36,7 @@ class TagController extends Controller
 	 */
 	public function create()
 	{
-		//
+		return view('tag.create');
 	}
 
 	/**
@@ -46,7 +47,8 @@ class TagController extends Controller
 	 */
 	public function store(StoreTagRequest $request)
 	{
-		//
+		$tag = Tag::create($request->all());
+		return redirect()->route('tag.show', ['tag' => $tag->id])->with('success', 'Tag cadastrada com sucesso');
 	}
 
 	/**
@@ -57,7 +59,7 @@ class TagController extends Controller
 	 */
 	public function show(Tag $tag)
 	{
-		//
+		return view('tag.show', ['tag' => $tag]);
 	}
 
 	/**
@@ -68,7 +70,7 @@ class TagController extends Controller
 	 */
 	public function edit(Tag $tag)
 	{
-		//
+		return view('tag.edit', ['tag' => $tag]);
 	}
 
 	/**
@@ -80,7 +82,8 @@ class TagController extends Controller
 	 */
 	public function update(UpdateTagRequest $request, Tag $tag)
 	{
-		//
+		$tag->update($request->all());
+		return redirect()->route('tag.show', ['tag' => $tag->id])->with('success', 'Tag atualizada com sucesso');
 	}
 
 	/**
@@ -91,6 +94,7 @@ class TagController extends Controller
 	 */
 	public function destroy(Tag $tag)
 	{
-		//
+		$tag->delete();
+		return redirect()->route('tag.index')->with('success', 'Tag removida com sucesso');
 	}
 }
