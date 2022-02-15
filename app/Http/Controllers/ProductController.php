@@ -25,7 +25,8 @@ class ProductController extends Controller
 	 */
 	public function index()
 	{
-		//
+		$products = Product::orderBy('id', 'asc')->paginate(5);
+		return view('product.index', ['products' => $products]);
 	}
 
 	/**
@@ -35,7 +36,7 @@ class ProductController extends Controller
 	 */
 	public function create()
 	{
-		//
+		return view('product.create');
 	}
 
 	/**
@@ -46,7 +47,8 @@ class ProductController extends Controller
 	 */
 	public function store(StoreProductRequest $request)
 	{
-		//
+		$product = Product::create($request->all());
+		return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Produto cadastrado com sucesso');
 	}
 
 	/**
@@ -57,7 +59,7 @@ class ProductController extends Controller
 	 */
 	public function show(Product $product)
 	{
-		//
+		return view('product.show', ['product' => $product]);
 	}
 
 	/**
@@ -68,7 +70,7 @@ class ProductController extends Controller
 	 */
 	public function edit(Product $product)
 	{
-		//
+		return view('product.edit', ['product' => $product]);
 	}
 
 	/**
@@ -80,7 +82,8 @@ class ProductController extends Controller
 	 */
 	public function update(UpdateProductRequest $request, Product $product)
 	{
-		//
+		$product->update($request->all());
+		return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Produto atualizado com sucesso');
 	}
 
 	/**
@@ -91,6 +94,7 @@ class ProductController extends Controller
 	 */
 	public function destroy(Product $product)
 	{
-		//
+		$product->delete();
+		return redirect()->route('product.index')->with('success', 'Produto removido com sucesso');
 	}
 }

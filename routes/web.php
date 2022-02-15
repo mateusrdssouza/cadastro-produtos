@@ -31,3 +31,8 @@ Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name(
  * Product routes
  */
 Route::resource('product', App\Http\Controllers\ProductController::class);
+
+/**
+* Tag routes
+*/
+Route::resource('tag', App\Http\Controllers\TagController::class);

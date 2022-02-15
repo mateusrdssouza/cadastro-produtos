@@ -21,6 +21,7 @@
 </head>
 <body>
 	<div id="app">
+
 		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
 			<div class="container">
 				<a class="navbar-brand" href="{{ url('/') }}">
@@ -33,7 +34,29 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<!-- Left Side Of Navbar -->
 					<ul class="navbar-nav me-auto">
-
+						@auth
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="dropdown-product" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Produtos
+								</a>
+								<ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdown-product">
+									<li><a class="dropdown-item" href="{{ route('product.create') }}">Cadastro</a></li>
+									<li><a class="dropdown-item" href="{{ route('product.index') }}">Listagem</a></li>
+								</ul>
+							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="dropdown-tag" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Tags
+								</a>
+								<ul class="dropdown-menu dropdown-menu" aria-labelledby="dropdown-tag">
+									<li><a class="dropdown-item" href="{{ route('tag.create') }}">Cadastro</a></li>
+									<li><a class="dropdown-item" href="{{ route('tag.index') }}">Listagem</a></li>
+								</ul>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="">Relatório</a>
+							</li>
+						@endauth
 					</ul>
 
 					<!-- Right Side Of Navbar -->
@@ -73,6 +96,7 @@
 		<main class="py-4">
 			@yield('content')
 		</main>
+
 	</div>
 </body>
 </html>
