@@ -12,6 +12,13 @@
 				</div>
 
 				<div class="card-body">
+
+					@if(session()->has('danger'))
+						<div class="alert alert-danger text-center">
+							{{ session()->get('danger') }}
+						</div>
+					@endif
+
 					<form action="{{ route('product.update', ['product' => $product->id ]) }}" method="post">
 						@csrf
 						@method('PUT')

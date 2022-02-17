@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
 use App\Models\Tag;
+use Exception;
 
 class TagController extends Controller
 {
@@ -47,8 +48,15 @@ class TagController extends Controller
 	 */
 	public function store(StoreTagRequest $request)
 	{
-		$tag = Tag::create($request->all());
-		return redirect()->route('tag.show', ['tag' => $tag->id])->with('success', 'Tag cadastrada com sucesso');
+		try
+		{
+			$tag = Tag::create($request->all());
+			return redirect()->route('tag.show', ['tag' => $tag->id])->with('success', 'Tag cadastrada com sucesso');
+		}
+		catch(Exception $e)
+		{
+			return back()->withInput()->with('danger', 'Ocorreu um erro ao cadastrar a tag');
+		}
 	}
 
 	/**
@@ -84,8 +92,15 @@ class TagController extends Controller
 	 */
 	public function update(UpdateTagRequest $request, Tag $tag)
 	{
-		$tag->update($request->all());
-		return redirect()->route('tag.show', ['tag' => $tag->id])->with('success', 'Tag atualizada com sucesso');
+		try
+		{
+			$tag->update($request->all());
+			return redirect()->route('tag.show', ['tag' => $tag->id])->with('success', 'Tag atualizada com sucesso');
+		}
+		catch(Exception $e)
+		{
+			return back()->withInput()->with('danger', 'Ocorreu um erro ao atualizar a tag');
+		}
 	}
 
 	/**
@@ -96,7 +111,15 @@ class TagController extends Controller
 	 */
 	public function destroy(Tag $tag)
 	{
-		$tag->delete();
-		return redirect()->route('tag.index')->with('success', 'Tag removida com sucesso');
+		try
+		{
+			return back()->withInput()->with('danger', 'Ocorreu um erro ao remover a tag');
+			$tag->delete();
+			return redirect()->route('tag.index')->with('success', 'Tag removida com sucesso');
+		}
+		catch(Exception $e)
+		{
+			return back()->withInput()->with('danger', 'Ocorreu um erro ao remover a tag');
+		}
 	}
 }

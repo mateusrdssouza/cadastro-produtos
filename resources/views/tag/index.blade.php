@@ -28,6 +28,12 @@
 						</div>
 					@endif
 
+					@if(session()->has('danger'))
+						<div class="alert alert-danger text-center">
+							{{ session()->get('danger') }}
+						</div>
+					@endif
+
 					@if(count($tags) > 0)
 
 						<table class="table table-striped">

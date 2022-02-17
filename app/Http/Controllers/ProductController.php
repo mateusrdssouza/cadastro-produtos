@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductTag;
 use App\Models\Tag;
+use Exception;
 
 class ProductController extends Controller
 {
@@ -50,20 +51,27 @@ class ProductController extends Controller
 	 */
 	public function store(StoreProductRequest $request)
 	{
-		$product = Product::create($request->all());
-
-		if(isset($request->tags) && !empty($request->tags))
+		try
 		{
-			foreach($request->tags as $tag)
-			{
-				$productTag = ProductTag::create([
-					'product_id' => $product->id,
-					'tag_id' => $tag
-				]);
-			}
-		}
+			$product = Product::create($request->all());
 
-		return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Produto cadastrado com sucesso');
+			if(isset($request->tags) && !empty($request->tags))
+			{
+				foreach($request->tags as $tag)
+				{
+					$productTag = ProductTag::create([
+						'product_id' => $product->id,
+						'tag_id' => $tag
+					]);
+				}
+			}
+
+			return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Produto cadastrado com sucesso');
+		}
+		catch(Exception $e)
+		{
+			return back()->withInput()->with('danger', 'Ocorreu um erro ao cadastrar o produto');
+		}
 	}
 
 	/**
@@ -101,21 +109,28 @@ class ProductController extends Controller
 	 */
 	public function update(UpdateProductRequest $request, Product $product)
 	{
-		$product->update($request->all());
-		$delete = ProductTag::where('product_id', $product->id)->delete();
-
-		if(isset($request->tags) && !empty($request->tags))
+		try
 		{
-			foreach($request->tags as $tag)
-			{
-				$productTag = ProductTag::create([
-					'product_id' => $product->id,
-					'tag_id' => $tag
-				]);
-			}
-		}
+			$product->update($request->all());
+			$delete = ProductTag::where('product_id', $product->id)->delete();
 
-		return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Produto atualizado com sucesso');
+			if(isset($request->tags) && !empty($request->tags))
+			{
+				foreach($request->tags as $tag)
+				{
+					$productTag = ProductTag::create([
+						'product_id' => $product->id,
+						'tag_id' => $tag
+					]);
+				}
+			}
+
+			return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Produto atualizado com sucesso');
+		}
+		catch(Exception $e)
+		{
+			return back()->withInput()->with('danger', 'Ocorreu um erro ao atualizar o produto');
+		}
 	}
 
 	/**
@@ -126,9 +141,16 @@ class ProductController extends Controller
 	 */
 	public function destroy(Product $product)
 	{
-		$delete = ProductTag::where('product_id', $product->id)->delete();
-		$product->delete();
+		try
+		{
+			$delete = ProductTag::where('product_id', $product->id)->delete();
+			$product->delete();
 
-		return redirect()->route('product.index')->with('success', 'Produto removido com sucesso');
+			return redirect()->route('product.index')->with('success', 'Produto removido com sucesso');
+		}
+		catch(Exception $e)
+		{
+			return back()->withInput()->with('danger', 'Ocorreu um erro ao remover o produto');
+		}
 	}
 }
