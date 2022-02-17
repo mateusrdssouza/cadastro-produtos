@@ -24,7 +24,8 @@ class StoreProductRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'name' => 'required|unique:product|max:50'
+			'name' => 'required|unique:product|max:50',
+			'tags' => 'nullable|exists:tag,id'
 		];
 	}
 }

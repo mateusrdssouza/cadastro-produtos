@@ -31,4 +31,14 @@ class Product extends Model
 	protected $fillable = [
 		'name'
 	];
+
+	/**
+	 * Defines an relationship.
+	 * 
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function tags()
+	{
+		return $this->belongsToMany(Tag::class);
+	}
 }

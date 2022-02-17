@@ -10,11 +10,11 @@
 				<div class="card-header">
 					<div class="row">
 						<div class="col-6 ">
-							Produtos
+							<h4 class="mt-2">Produtos</h4>
 						</div>
 						<div class="col-6">
 							<div class="float-end">
-								<a href="{{ route('product.create')}} " class="btn btn-primary btn-md">Novo produto</a>
+								<a href="{{ route('product.create')}}" class="btn btn-primary btn-md">Novo produto</a>
 							</div>
 						</div>
 					</div>
@@ -34,8 +34,8 @@
 							<thead>
 								<tr>
 									<th class="text-center" scope="col" width="10%">ID</th>
-									<th class="text-center" scope="col" width="65%">Nome</th>
-									<th class="text-center" scope="col" width="25%"></th>
+									<th class="text-center" scope="col" width="60%">Nome</th>
+									<th class="text-center" scope="col" width="30%"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -44,9 +44,10 @@
 										<td class="text-center align-middle">{{ $product->id }}</td>
 										<td class="text-center align-middle">{{ $product->name }}</td>
 										<td>
-											<div class="d-grid gap-2 d-md-flex justify-content-md-center">
+											<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+												<a href="{{ route('product.show', $product->id) }}" class="btn btn-success btn-md">Visualizar</a>
 												<a href="{{ route('product.edit', $product->id) }}" class="btn btn-primary btn-md">Editar</a>
-												<form id="form_{{ $product->id }}" action="{{ route('product.destroy', ['product' =>  $product->id]) }}" method="post">
+												<form id="form_{{ $product->id }}" action="{{ route('product.destroy', ['product' =>  $product->id]) }}" class="d-none" method="post">
 													@method('DELETE')
 													@csrf
 												</form>

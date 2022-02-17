@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Product;
+use App\Models\ProductTag;
+use App\Models\Tag;
 
 class ProductController extends Controller
 {
@@ -36,7 +38,8 @@ class ProductController extends Controller
 	 */
 	public function create()
 	{
-		return view('product.create');
+		$tags = Tag::orderBy('name', 'asc')->get();
+		return view('product.create', ['tags' => $tags]);
 	}
 
 	/**
@@ -48,6 +51,18 @@ class ProductController extends Controller
 	public function store(StoreProductRequest $request)
 	{
 		$product = Product::create($request->all());
+
+		if(isset($request->tags) && !empty($request->tags))
+		{
+			foreach($request->tags as $tag)
+			{
+				$productTag = ProductTag::create([
+					'product_id' => $product->id,
+					'tag_id' => $tag
+				]);
+			}
+		}
+
 		return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Produto cadastrado com sucesso');
 	}
 
@@ -59,6 +74,7 @@ class ProductController extends Controller
 	 */
 	public function show(Product $product)
 	{
+		$product = Product::with('tags')->find($product->id);
 		return view('product.show', ['product' => $product]);
 	}
 
@@ -70,7 +86,10 @@ class ProductController extends Controller
 	 */
 	public function edit(Product $product)
 	{
-		return view('product.edit', ['product' => $product]);
+		$product = Product::with('tags')->find($product->id);
+		$tags = Tag::orderBy('name', 'asc')->get();
+
+		return view('product.edit', ['product' => $product, 'tags' => $tags]);
 	}
 
 	/**
@@ -83,6 +102,19 @@ class ProductController extends Controller
 	public function update(UpdateProductRequest $request, Product $product)
 	{
 		$product->update($request->all());
+		$delete = ProductTag::where('product_id', $product->id)->delete();
+
+		if(isset($request->tags) && !empty($request->tags))
+		{
+			foreach($request->tags as $tag)
+			{
+				$productTag = ProductTag::create([
+					'product_id' => $product->id,
+					'tag_id' => $tag
+				]);
+			}
+		}
+
 		return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Produto atualizado com sucesso');
 	}
 
@@ -94,7 +126,9 @@ class ProductController extends Controller
 	 */
 	public function destroy(Product $product)
 	{
+		$delete = ProductTag::where('product_id', $product->id)->delete();
 		$product->delete();
+
 		return redirect()->route('product.index')->with('success', 'Produto removido com sucesso');
 	}
 }

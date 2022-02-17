@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
 use App\Http\Requests\StoreTagRequest;
 use App\Http\Requests\UpdateTagRequest;
+use App\Models\Tag;
 
 class TagController extends Controller
 {
@@ -59,6 +59,7 @@ class TagController extends Controller
 	 */
 	public function show(Tag $tag)
 	{
+		$tag = Tag::with('products')->find($tag->id);
 		return view('tag.show', ['tag' => $tag]);
 	}
 

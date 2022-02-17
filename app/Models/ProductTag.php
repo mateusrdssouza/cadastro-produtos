@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class ProductTag extends Model
 {
 	use HasFactory;
 
@@ -14,7 +14,7 @@ class Tag extends Model
 	 *
 	 * @var string
 	 */
-	protected $table = 'tag';
+	protected $table = 'product_tag';
 
 	/**
 	 * Indicates if the model should be timestamped.
@@ -29,16 +29,7 @@ class Tag extends Model
 	 * @var array<int, string>
 	 */
 	protected $fillable = [
-		'name'
+		'product_id',
+		'tag_id'
 	];
-
-	/**
-	 * Defines an relationship.
-	 * 
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-	 */
-	public function products()
-	{
-		return $this->belongsToMany(Product::class);
-	}
 }
