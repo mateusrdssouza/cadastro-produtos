@@ -11,7 +11,7 @@ Após a instalação, executar o comando abaixo no terminal na pasta do projeto 
 composer install
 ```
 
-Renomeie o arquivo **.env.production** para **.env**. Este arquivo armazenará as variávies de ambiente da aplicação.
+Renomeie o arquivo **.env.production** para **.env**. Este arquivo armazenará as variáveis de ambiente da aplicação.
 
 Execute o comando abaixo no terminal para gerar as tabelas no banco de dados. Serão criadas as tabelas propostas no desafio, além das tabelas para autenticação de usuário:
 ```sh
