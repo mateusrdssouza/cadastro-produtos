@@ -37,7 +37,7 @@
 			<div>
 				<h2>Relatório</h2>
 				<p>Relatório de relevância de produtos. Clique no botão abaixo para visualizar os detalhes do relatório de relevância de produtos.</p>
-				<a href="" class="btn btn-primary">Acessar</a>
+				<a href="{{ route('report') }}" class="btn btn-primary">Acessar</a>
 			</div>
 		</div>
 	</div>

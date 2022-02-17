@@ -54,7 +54,7 @@
 								</ul>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="">Relatório</a>
+								<a class="nav-link" href="{{ route('report') }}">Relatório</a>
 							</li>
 						@endauth
 					</ul>

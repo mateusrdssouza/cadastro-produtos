@@ -36,3 +36,8 @@ Route::resource('product', App\Http\Controllers\ProductController::class);
 * Tag routes
 */
 Route::resource('tag', App\Http\Controllers\TagController::class);
+
+/**
+ * Report routes
+ */
+Route::get('report', [App\Http\Controllers\ReportController::class, 'index'])->name('report');
