@@ -25,7 +25,7 @@ class TagController extends Controller
 	 */
 	public function index()
 	{
-		$tags = Tag::orderBy('id', 'asc')->paginate(5);
+		$tags = Tag::with('products')->paginate(5);
 		return view('tag.index', ['tags' => $tags]);
 	}
 
@@ -71,6 +71,7 @@ class TagController extends Controller
 	 */
 	public function edit(Tag $tag)
 	{
+		$tag = Tag::with('products')->find($tag->id);
 		return view('tag.edit', ['tag' => $tag]);
 	}
 
