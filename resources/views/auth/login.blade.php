@@ -4,6 +4,9 @@
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
+
+			<img src="{{ asset('img/logo.png') }}" class="mx-auto d-block mt-4 mb-5" width="100px">
+
 			<div class="card">
 				<div class="card-header">Login</div>
 
