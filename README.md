@@ -4,28 +4,28 @@
 - [Laravel] - The PHP Framework for Web Artisans
 
 ## Instalação
-É necessário instalar o [Composer], ferramenta utilizada para a instalação dos recursos do projeto.
 
-Após a instalação, executar o comando abaixo no terminal na pasta do projeto para baixar as dependências necessárias:
+Execute o comando abaixo para iniciar os containers:
 ```sh
-composer install
+docker-compose up -d
 ```
 
-Renomeie o arquivo **.env.production** para **.env**. Este arquivo armazenará as variáveis de ambiente da aplicação.
-
-Execute o comando abaixo no terminal para gerar as tabelas no banco de dados. Serão criadas as tabelas propostas no desafio, além das tabelas para autenticação de usuário:
+Execute o comando abaixo para instalar as dependências do projeto:
 ```sh
-php artisan migrate
+docker-compose exec app composer install
 ```
-\* As configurações do banco de dados são definidas no arquivo **.env**. Nesse caso, defini o nome do banco como **desafio** e utilizei as informações *default* do MySQL de IP, usuário e senha.
+
+Execute o comando abaixo para replicar o conteúdo do arquivo **.env.production** para o arquivo **.env**:
+```sh
+cp .env.production .env
+```
+
+Execute o comando abaixo para gerar as tabelas no banco de dados:
+```sh
+docker-compose exec app php artisan migrate
+```
 
 Após esses passos, a aplicação está pronta para uso.
-
-Basta executar o comando abaixo para iniciar o servidor.
-```sh
-php artisan serve
-```
-O Laravel irá, por padrão, servir a aplicação no endereço http://localhost:8000/.
 
 ### SQL de extração de relatório de relevância de produtos
 ```SQL
@@ -38,4 +38,3 @@ ORDER BY t.name;
 ```
 
 [Laravel]: <https://laravel.com/>
-[Composer]: <https://getcomposer.org/>
